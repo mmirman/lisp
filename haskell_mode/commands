@@ -1,0 +1,2 @@
+,s/\\$$Name: \\$$//g
+,wq haskell-mode.tmp.el
