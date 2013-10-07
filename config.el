@@ -17,9 +17,20 @@
 (add-hook 'shell-mode-hook 
           'ansi-color-for-comint-mode-on)
 
+;; BACKUP DIRECTORY(s
+(setq
+ backup-by-copying t      ; don't clobber symlinks
+ backup-directory-alist
+ '(("." . "~/.saves"))    ; don't litter my fs tree
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t)       ; use versioned backups
+
+
 ;; XTERM MOUSE 
 (xterm-mouse-mode 1)
-(mouse-sel-mode 1)
+;; (mouse-sel-mode 1)
 
 ;; WINDOW EDITING
 (defun prev-window ()
