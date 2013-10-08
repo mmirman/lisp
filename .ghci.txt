@@ -1,0 +1,54 @@
+:def rr (\_ -> return ":reload")
+
+-------------------------------------------------------------------------
+--- | Sets
+:set -W
+
+
+-------------------------------------------------------------------------
+
+
+:def _load const(System.Environment.getEnvironment>>=maybe(return"")readFile.lookup"GHCIRC")
+:_load
+
+:{
+  let { cmdHelp _ msg "--help" = return $ "putStrLn "++show msg  
+      ; cmdHelp cmd _ other  = cmd other }
+:}
+
+:def cmd \l->return $ unlines [":def cmdTmp \\_->"++l,":cmdTmp",":undef cmdTmp"]
+
+:def . cmdHelp readFile ":. <file>\t\t-- source commands from <file>"
+
+let pwd _ = return "System.Directory.getCurrentDirectory >>= putStrLn"
+      
+:def pwd mdHelp pwd ":pwd\t\t\t-- print working directory"
+        
+let ls p  = return $ "mapM_ putStrLn =<< System.Directory.getDirectoryContents "++show path  where path = if (null p) then "." else p
+
+:def ls cmdHelp ls ":ls [<path>]\t\t-- list directory (\".\" by default)"
+
+
+-------------------------------------------------------------------------
+--- | Hoogle
+:def hoogle \str -> return $ ":! /Users/matt/.cabal/bin/hoogle --count=15 \"" ++ str ++ "\""
+
+-------------------------------------------------------------------------
+--- | Hlint
+-- <http://www.cs.kent.ac.uk/people/staff/cr3/toolbox/haskell/dot-squashed.ghci641>
+:{
+let { redir varcmd = case break Data.Char.isSpace varcmd of { (var,_:cmd) -> return $ unlines [":set -fno-print-bind-result","tmp <- System.Directory.getTemporaryDirectory","(f,h) <- System.IO.openTempFile tmp \"ghci\"","sto <- GHC.Handle.hDuplicate System.IO.stdout","GHC.Handle.hDuplicateTo h System.IO.stdout","System.IO.hClose h",cmd,"GHC.Handle.hDuplicateTo sto System.IO.stdout","let readFileNow f = readFile f >>= \\t->length t `seq` return t",var++" <- readFileNow f","System.Directory.removeFile f"]
+                                                            ; _ -> return "putStrLn \"usage: :redir <var> <cmd>\"" } }
+:}
+-- End copied material
+ 
+-- Integration with the hlint code style tool
+let hlint _ = return $ unlines [":set -w",    ":redir hlintvar1 :show modules", ":cmd return (\":! /Users/matt/.cabal/bin/hlint \" ++ (concat $ Data.List.intersperse \" \" (map (fst . break (==',') . drop 2 . snd . break (== '(')) $ lines hlintvar1)))",    ":set -Wall"]
+:def hlint hlint
+
+
+:def mm (\_ -> return $ unlines [":load \"Main.hs\"", "main"])
+                   
+-------------------------------------------------------------------------
+:undef _load
+
