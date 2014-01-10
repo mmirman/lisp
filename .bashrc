@@ -1,5 +1,7 @@
-export PATH=/usr/local/git/bin:/opt/local/sbin:/opt/local/libexec/git-core:~/.cabal/bin:/usr/local/bin:/Applications/iTerm.app/Contents/MacOS/:/Applications/Emacs.app/Contents/MacOS/bin/:$PATH:/opt/local/bin
+export PATH=/usr/local/git/bin:/opt/local/sbin:/opt/local/libexec/git-core:~/.cabal/bin:/usr/local/bin:/Applications/iTerm.app/Contents/MacOS:/Applications/Emacs.app/Contents/MacOS/bin:$PATH:/opt/local/bin
 export DYLD_LIBRARY_PATH=/usr/local/cuda/lib
+
+# export PS1="\A \w \u\$ " 
 
 COL_A="\[$(tput setaf 5)\]"
 COL_B="\[$(tput setaf 3)\]"
@@ -30,6 +32,6 @@ export EDITOR=emacs
 export SVN_EDITOR=emacs
 export GIT_EDITOR=emacs
 
-if [ -f /opt/local/etc/bash_completion ]; then
-      . /opt/local/etc/bash_completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
 fi
