@@ -1,8 +1,6 @@
 export PATH=/usr/local/git/bin:/opt/local/sbin:/opt/local/libexec/git-core:~/.cabal/bin:/usr/local/bin:/Applications/iTerm.app/Contents/MacOS/:/Applications/Emacs.app/Contents/MacOS/bin/:$PATH:/opt/local/bin
 export DYLD_LIBRARY_PATH=/usr/local/cuda/lib
 
-# export PS1="\A \w \u\$ " 
-
 COL_A="\[$(tput setaf 5)\]"
 COL_B="\[$(tput setaf 3)\]"
 export PS1="$COL_A\A $COL_B\w $COL_A\u$COL_B\$ \[$(tput sgr0)\]"
