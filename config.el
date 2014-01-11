@@ -157,3 +157,12 @@
               tab-width 4
               indent-tabs-mode 0)
 
+(defun load-cedet ()
+  (interactive)
+  (load-library "cedet")
+  (global-ede-mode 1)
+  (semantic-load-enable-code-helpers 1)
+  (global-srecode-minor-mode 1)
+)
+
+(add-hook 'c++-mode-hook 'load-cedet)
