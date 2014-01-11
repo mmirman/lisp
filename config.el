@@ -166,3 +166,4 @@
 )
 
 (add-hook 'c++-mode-hook 'load-cedet)
+(add-hook 'c-mode-hook 'load-cedet)
