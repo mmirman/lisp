@@ -159,8 +159,8 @@
 
 (defun load-cedet ()
   (interactive)
-  (load-library "cedet")
   (global-ede-mode 1)
+  (semantic-mode 1)
   (semantic-load-enable-code-helpers 1)
   (global-srecode-minor-mode 1)
 )
