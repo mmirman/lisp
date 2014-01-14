@@ -8,4 +8,7 @@ Installation
 
 > cd lisp/cedet-1.1/
 > make EMACS=emacs
+
+> brew install ectags
+> brew install ebrowse
 ```

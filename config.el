@@ -157,13 +157,52 @@
               tab-width 4
               indent-tabs-mode 0)
 
-(defun load-cedet ()
+(defun create-tags (dir-name)
+    "Create tags file."
+    (interactive "DDirectory: ")
+    (shell-command
+     (format "find %s -name \"*.[(cpp)ch]\" -print | xargs ctags -f %s/TAGS -a -e" 
+			 (directory-file-name dir-name)
+			 (directory-file-name dir-name)))
+	)
+
+(defun create-browse (dir-name)
+    "Create browse file."
+    (interactive "DDirectory: ")
+    (shell-command
+     (format "find %s -name \"*.[(cpp)ch]\" -print | xargs ebrowse -a -o %s/BROWSE" 
+			 (directory-file-name dir-name)
+			 (directory-file-name dir-name)))
+	)
+
+(defadvice find-tag (around refresh-etags activate)
+  "Rerun etags and reload tags if tag not found and redo find-tag.              
+   If buffer is modified, ask about save before running etags."
+  (let ((extension (file-name-extension (buffer-file-name))))
+    (condition-case err
+		ad-do-it
+      (error (and (buffer-modified-p)
+				  (not (ding))
+				  (y-or-n-p "Buffer is modified, save it? ")
+				  (save-buffer))
+			 (er-refresh-etags extension)
+			 ad-do-it))))
+
+
+(defun er-refresh-etags (&optional extension)
+  "Run etags on all peer files in current dir and reload them silently."
   (interactive)
-  (global-ede-mode 1)
-  (semantic-mode 1)
-  (semantic-load-enable-code-helpers 1)
-  (global-srecode-minor-mode 1)
+  (shell-command (format "etags *.%s" (or extension "el")))
+  (let ((tags-revert-without-query t))  ; don't query, revert silently          
+    (visit-tags-table default-directory nil)))
+
+
+(defun load-ebrowse ()
+  (interactive)
+  (local-set-key "\C-c>" 'ebrowse-tags-complete-symbol)
+  (local-set-key "\C-c." 'ebrowse-tags-complete-symbol)
+  (local-set-key "\C-c?" 'ebrowse-tags-find-declaration-other-window)
 )
 
-(add-hook 'c++-mode-hook 'load-cedet)
-(add-hook 'c-mode-hook 'load-cedet)
+(add-hook 'c++-mode-common-hook 'load-ebrowse)
+(add-hook 'c-mode-common-hook 'load-ebrowse)
