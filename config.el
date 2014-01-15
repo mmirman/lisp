@@ -196,9 +196,34 @@
   (let ((tags-revert-without-query t))  ; don't query, revert silently          
     (visit-tags-table default-directory nil)))
 
+(defun parent-directory (dir)
+  (unless (equal "/" dir)
+	(file-name-directory (directory-file-name dir))))
+  
+(defun find-file-in-heirarchy (current-dir fname)
+  "Search for a file named FNAME upwards through the directory hierarchy, starting from CURRENT-DIR" 
+  (let ((file (concat current-dir fname))
+		(parent (parent-directory (expand-file-name current-dir))))
+	(if (file-exists-p file)
+		file
+	  (when parent
+		(find-file-in-heirarchy parent fname)))))
+
+(defun get-project-root () 
+  "Finds the root of the project by searching for CMakeLists.txt"
+  (directory-file-name (file-name-directory (find-file-in-heirarchy default-directory "CMakeLists.txt")))
+  )
 
 (defun load-ebrowse ()
   (interactive)
+
+  (defvar ebrowse-tag-file (get-project-root))
+  
+  (create-tags ebrowse-tag-file)
+  (when (file-exists-p ebrowse-tag-file)
+    (find-file-noselect (format "%s/BROWSE" ebrowse-tag-file) 1)
+	)
+
   (local-set-key "\C-c>" 'ebrowse-tags-complete-symbol)
   (local-set-key "\C-c." 'ebrowse-tags-complete-symbol)
   (local-set-key "\C-c?" 'ebrowse-tags-find-declaration-other-window)
