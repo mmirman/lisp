@@ -28,6 +28,10 @@
  version-control t)       ; use versioned backups
 
 
+(setq-default indent-tabs-mode nil) 
+(setq indent-tabs-mode nil)
+
+
 ;; XTERM MOUSE 
 (xterm-mouse-mode 1)
 ;; (mouse-sel-mode 1)
