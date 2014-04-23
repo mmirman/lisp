@@ -17,19 +17,25 @@
 (add-hook 'shell-mode-hook 
           'ansi-color-for-comint-mode-on)
 
-;; BACKUP DIRECTORY(s
+;; BACKUP DIRECTORY
 (setq
  backup-by-copying t      ; don't clobber symlinks
- backup-directory-alist
- '(("." . "~/.saves"))    ; don't litter my fs tree
+ backup-directory-alist '(("." . "~/.saves"))    ; don't litter my fs tree
  delete-old-versions t
  kept-new-versions 6
  kept-old-versions 2
  version-control t)       ; use versioned backups
 
 
-(setq-default indent-tabs-mode nil) 
-(setq indent-tabs-mode nil)
+
+
+(setq-default c-basic-offset 4 
+              c-indent-level 4
+              tab-width 4
+              indent-tabs-mode nil
+              truncate-lines t
+              c-continued-statement-offset 4
+              )
 
 
 ;; XTERM MOUSE 
@@ -157,15 +163,14 @@
 (add-hook 'latex-mode-hook 'set-TEX-key)
 
 
-(setq-default c-basic-offset 4 
-              tab-width 4
-              indent-tabs-mode 0)
+
+
 
 (defun create-tags (dir-name)
     "Create tags file."
     (interactive "DDirectory: ")
     (shell-command
-     (format "find %s -name \"*.[(cpp)ch]\" -print | xargs ctags -f %s/TAGS -a -e" 
+     (format "find %s -name \"*.[(cpp)ch]\" -print | xargs /usr/local/bin/ctags -f %s/TAGS -a -e"  ;; need ctags 5.8 at least
 			 (directory-file-name dir-name)
 			 (directory-file-name dir-name)))
 	)
@@ -214,8 +219,8 @@
 		(find-file-in-heirarchy parent fname)))))
 
 (defun get-project-root () 
-  "Finds the root of the project by searching for CMakeLists.txt"
-  (directory-file-name (file-name-directory (find-file-in-heirarchy default-directory "CMakeLists.txt")))
+  "Finds the root of the project by searching for BROWSE"
+  (directory-file-name (file-name-directory (find-file-in-heirarchy default-directory "BROWSE")))
   )
 
 (defun load-ebrowse ()
@@ -229,9 +234,45 @@
 	)
 
   (local-set-key "\C-c>" 'ebrowse-tags-complete-symbol)
-  (local-set-key "\C-c." 'ebrowse-tags-complete-symbol)
-  (local-set-key "\C-c?" 'ebrowse-tags-find-declaration-other-window)
+  (local-set-key "\C-c?" 'ebrowse-tags-find-declaration)
+  (local-set-key "\C-c." 'ebrowse-tags-find-declaration-other-window)
+
 )
 
 (add-hook 'c++-mode-common-hook 'load-ebrowse)
 (add-hook 'c-mode-common-hook 'load-ebrowse)
+
+
+(defun my-c-lineup-arglist (langelem)
+  (save-excursion
+        (goto-char (c-langelem-pos langelem))
+        (vector (+ (current-column) 4))
+        )
+  )
+
+
+
+(c-add-style "WebKit"
+              '("stroustrup"
+                (c-offsets-alist
+                 (innamespace . -)
+                 (inline-open . 0)
+                 (inher-cont . c-lineup-multi-inher)
+                 (arglist-cont-nonempty . my-c-lineup-arglist)
+                 (template-args-cont . +))))
+(defun my-c-style () 
+  (interactive)
+  (c-set-style "WebKit")
+  (c-set-offset 'substatement-open '0) ; brackets should be at same indentation level as the statements they open
+  (c-set-offset 'brace-list-open '+)
+)
+
+(add-hook 'c++-mode-common-hook 'my-c-style)
+(add-hook 'c-mode-common-hook 'my-c-style)
+
+(defun set-spaces () 
+  (interactive)
+  (setq indent-tabs-mode nil)
+)
+
+(add-hook 'change-log-mode-hook 'set-spaces)
