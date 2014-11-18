@@ -285,6 +285,5 @@
 
 (global-set-key "\M-c" 'pbcopy)
 
-(require 'cl-lib)
-(require 'workgroups)
-(require 'perspective)
+
+(require 'winring)
