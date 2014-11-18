@@ -276,3 +276,14 @@
 )
 
 (add-hook 'change-log-mode-hook 'set-spaces)
+
+
+(defun pbcopy ()
+  (interactive)
+  (call-process-region (region-beginning) (region-end) "pbcopy")
+)
+
+(global-set-key "\M-c" 'pbcopy)
+
+(require 'workgroups)
+(require 'perspective)
