@@ -296,14 +296,8 @@
   ;; For important compatibility libraries like cl-lib
     (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 
-
-(setq auto-mode-alist
-      (cons '("\\.julius$" . js-mode) auto-mode-alist))
-
-(setq auto-mode-alist
-      (cons '("\\.lucius$" . css-mode) auto-mode-alist))
-
-(setq auto-mode-alist
-      (cons '("\\.hamlet$" . html-mode) auto-mode-alist))
-
-
+(autoload 'bash-completion-dynamic-complete
+  "bash-completion"
+  "BASH completion hook")
+(add-hook 'shell-dynamic-complete-functions
+            'bash-completion-dynamic-complete)
