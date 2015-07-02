@@ -301,3 +301,12 @@
   "BASH completion hook")
 (add-hook 'shell-dynamic-complete-functions
             'bash-completion-dynamic-complete)
+
+
+(defun my-hamlet-mode ()
+  (interactive)
+  (load-library "haskell-simple-indent")
+  (turn-on-haskell-simple-indent)  
+  )
+
+(add-hook 'shakespeare-hamlet-mode-hook 'my-hamlet-mode)
