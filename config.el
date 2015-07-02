@@ -11,8 +11,9 @@
 (menu-bar-mode -1)
 
 (let ((default-directory "~/.emacs.d/lisp/"))
-      (normal-top-level-add-to-load-path '("."))
-      (normal-top-level-add-subdirs-to-load-path))
+  (normal-top-level-add-to-load-path '("."))
+  (normal-top-level-add-to-load-path '("~/.emacs.d/elpa/dash-20150611.922/"))
+  (normal-top-level-add-subdirs-to-load-path))
 
 (add-hook 'shell-mode-hook 
           'ansi-color-for-comint-mode-on)
@@ -287,3 +288,22 @@
 
 
 (require 'winring)
+
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/"))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+    (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+
+
+(setq auto-mode-alist
+      (cons '("\\.julius$" . js-mode) auto-mode-alist))
+
+(setq auto-mode-alist
+      (cons '("\\.lucius$" . css-mode) auto-mode-alist))
+
+(setq auto-mode-alist
+      (cons '("\\.hamlet$" . html-mode) auto-mode-alist))
+
+
