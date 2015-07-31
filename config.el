@@ -293,20 +293,23 @@
 
 (global-set-key "\M-c" 'pbcopy)
 
-(require 'winring)
+(if (> emacs-major-version 22) (
 
+(require 'winring)
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/"))
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
     (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+))
 
 (autoload 'bash-completion-dynamic-complete
   "bash-completion"
   "BASH completion hook")
 (add-hook 'shell-dynamic-complete-functions
             'bash-completion-dynamic-complete)
+
 
 
 (defun my-hamlet-mode ()
@@ -325,7 +328,8 @@
 (defun make-named-frame (name)
   (interactive "sFrame name: ")
   (make-frame-command)
-  (set-frame-name name)
+  (if (and (stringp name) (not (equal name "")))
+      (set-frame-name name))
 )
 
 (global-set-key "\C-c(" 'prev-frame)
@@ -333,4 +337,5 @@
 (global-set-key "\C-cn" 'make-named-frame)
 (global-set-key "\C-cs" 'select-frame-by-name)
 (global-set-key "\C-c0" 'delete-frame)
+(global-set-key "\C-ck" 'delete-frame)
 
