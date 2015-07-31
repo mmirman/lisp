@@ -336,6 +336,5 @@
 (global-set-key "\C-c)" 'other-frame)
 (global-set-key "\C-cn" 'make-named-frame)
 (global-set-key "\C-cs" 'select-frame-by-name)
-(global-set-key "\C-c0" 'delete-frame)
 (global-set-key "\C-ck" 'delete-frame)
 
