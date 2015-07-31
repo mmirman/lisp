@@ -263,6 +263,12 @@
                  (template-args-cont . +))))
 (defun my-c-style () 
   (interactive)
+
+  (hs-minor-mode)
+
+  (define-key hs-minor-mode-map "\C-ch" 'hs-hide-block)
+  (define-key hs-minor-mode-map "\C-cs" 'hs-show-block)
+
   (c-set-style "WebKit")
   (c-set-offset 'substatement-open '0) ; brackets should be at same indentation level as the statements they open
   (c-set-offset 'brace-list-open '+)
@@ -270,6 +276,7 @@
 
 (add-hook 'c++-mode-common-hook 'my-c-style)
 (add-hook 'c-mode-common-hook 'my-c-style)
+(add-hook 'perl-mode-common-hook 'my-c-style)
 
 (defun set-spaces () 
   (interactive)
@@ -285,7 +292,6 @@
 )
 
 (global-set-key "\M-c" 'pbcopy)
-
 
 (require 'winring)
 
@@ -310,3 +316,21 @@
   )
 
 (add-hook 'shakespeare-hamlet-mode-hook 'my-hamlet-mode)
+
+(defun prev-frame ()
+  (interactive)
+  (other-frame -1)
+)
+
+(defun make-named-frame (name)
+  (interactive "sFrame name: ")
+  (make-frame-command)
+  (set-frame-name name)
+)
+
+(global-set-key "\C-c(" 'prev-frame)
+(global-set-key "\C-c)" 'other-frame)
+(global-set-key "\C-cn" 'make-named-frame)
+(global-set-key "\C-cs" 'select-frame-by-name)
+(global-set-key "\C-c0" 'delete-frame)
+
