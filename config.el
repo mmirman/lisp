@@ -293,7 +293,7 @@
 
 (global-set-key "\M-c" 'pbcopy)
 
-(if (> emacs-major-version 22) (
+(if (> emacs-major-version 22)
 
 (require 'winring)
 (require 'package)
@@ -302,7 +302,7 @@
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
     (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-))
+)
 
 (autoload 'bash-completion-dynamic-complete
   "bash-completion"
