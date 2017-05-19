@@ -25,10 +25,9 @@
  delete-old-versions t
  kept-new-versions 6
  kept-old-versions 2
- version-control t)       ; use versioned backups
-
-
-
+ version-control t
+ auto-save-default nil
+ )       ; use versioned backups
 
 (setq-default c-basic-offset 4 
               c-indent-level 4
@@ -99,6 +98,8 @@
 (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Vagrantfile" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
+
+(add-to-list 'auto-mode-alist '("\\.ux$" . html-mode))
 
 ;;;;;;;;;;;;;;;;
 ;; CROSSHAIRS ;;
@@ -338,3 +339,18 @@
 (global-set-key "\C-cs" 'select-frame-by-name)
 (global-set-key "\C-ck" 'delete-frame)
 
+
+(setq tramp-default-method "ssh")
+
+
+(defun remove-dos-eol ()
+  "Do not show ^M in files containing mixed UNIX and DOS line endings."
+  (interactive)
+  (setq buffer-display-table (make-display-table))
+  (aset buffer-display-table ?\^M []))
+
+
+(add-hook 'latex-mode-hook 'remove-dos-eol)
+
+
+(electric-indent-mode 0)
