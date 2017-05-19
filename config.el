@@ -82,6 +82,11 @@
   (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
   )
 
+(defun set-compilation-keys ()
+  (interactive)
+  (define-key compilation-mode-map "\C-o" 'other-window)
+  )
+
 (set-my-keys)
 
 ;; dired mode masks some keys, so make sure that when dired mode and shell loads, 
@@ -89,6 +94,8 @@
 (add-hook 'dired-hook 'set-my-keys)
 (add-hook 'dired-mode-hook 'set-dired-keys)
 (add-hook 'shell-hook 'set-my-keys)
+(add-hook 'compilation-mode-hook 'set-my-keys)
+(add-hook 'compilation-mode-hook 'set-compilation-keys)
 
 ;;;;;;;;;;;;;;;
 ;; RUBY MODE ;;
