@@ -72,7 +72,6 @@
   (global-set-key "\C-c\C-r" 'rename-buffer)
   (global-set-key "\C-c\C-k" 'global-set-key)
   (global-set-key "\C-c\C-k" 'global-set-key)
-  
   (global-set-key (kbd "C-x a r") 'align-regexp)
   )
 
@@ -96,6 +95,17 @@
 (add-hook 'shell-hook 'set-my-keys)
 (add-hook 'compilation-mode-hook 'set-my-keys)
 (add-hook 'compilation-mode-hook 'set-compilation-keys)
+
+
+(defun set-latex-keys ()
+  (interactive)
+  (setq-local enable-local-variables :all)
+  (define-key latex-mode-map "\C-c\C-m" 'compile)
+  (setq-local compilation-read-command nil)
+  (visual-line-mode)
+  )
+
+(add-hook 'latex-mode-hook 'set-latex-keys)
 
 ;;;;;;;;;;;;;;;
 ;; RUBY MODE ;;
