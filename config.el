@@ -73,6 +73,7 @@
   (global-set-key "\C-c\C-k" 'global-set-key)
   (global-set-key "\C-c\C-k" 'global-set-key)
   (global-set-key (kbd "C-x a r") 'align-regexp)
+  (global-set-key "\M-R" 'replace-regexp)
   )
 
 (defun set-dired-keys ()
@@ -105,7 +106,7 @@
   (visual-line-mode)
   )
 
-(add-hook 'latex-mode-hook 'set-latex-keys)
+
 
 ;;;;;;;;;;;;;;;
 ;; RUBY MODE ;;
@@ -369,5 +370,8 @@
 
 (add-hook 'latex-mode-hook 'remove-dos-eol)
 
-
 (electric-indent-mode 0)
+
+(add-hook 'latex-mode-hook 'set-latex-keys)
+(add-hook 'tex-mode-hook 'set-latex-keys)
+
