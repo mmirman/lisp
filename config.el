@@ -63,17 +63,16 @@
   (interactive)
   (windmove-default-keybindings)
   (global-set-key (kbd "C-x \\") 'goto-line )
-  (global-set-key "\C-xo" 'prev-window )
-  (global-set-key "\C-u" 'prev-window )
-  (global-set-key "\C-o" 'other-window )
+  (global-set-key (kbd "C-x o") 'prev-window )
+  (global-set-key (kbd "C-u") 'prev-window )
+  (global-set-key (kbd "C-o") 'other-window )
 
-  (global-set-key "\C-cr" 'rename-buffer)
+  (global-set-key (kbd "C-c r") 'rename-buffer)
   (global-set-key (kbd "C-x %") 'shrink-window)
-  (global-set-key "\C-c\C-r" 'rename-buffer)
-  (global-set-key "\C-c\C-k" 'global-set-key)
-  (global-set-key "\C-c\C-k" 'global-set-key)
+  (global-set-key (kbd "C-c C-k") 'global-set-key)
+  (global-set-key (kbd "C-c C-k") 'global-set-key)
   (global-set-key (kbd "C-x a r") 'align-regexp)
-  (global-set-key "\M-R" 'replace-regexp)
+  (global-set-key (kbd "M-R") 'replace-regexp)
   )
 
 (defun set-dired-keys ()
@@ -182,111 +181,13 @@
 
 (add-hook 'latex-mode-hook 'set-TEX-key)
 
-
-
-
-
-(defun create-tags (dir-name)
-    "Create tags file."
-    (interactive "DDirectory: ")
-    (shell-command
-     (format "find %s -name \"*.[(cpp)ch]\" -print | xargs /usr/local/bin/ctags -f %s/TAGS -a -e"  ;; need ctags 5.8 at least
-			 (directory-file-name dir-name)
-			 (directory-file-name dir-name)))
-	)
-
-(defun create-browse (dir-name)
-    "Create browse file."
-    (interactive "DDirectory: ")
-    (shell-command
-     (format "find %s -name \"*.[(cpp)ch]\" -print | xargs ebrowse -a -o %s/BROWSE" 
-			 (directory-file-name dir-name)
-			 (directory-file-name dir-name)))
-	)
-
-(defadvice find-tag (around refresh-etags activate)
-  "Rerun etags and reload tags if tag not found and redo find-tag.              
-   If buffer is modified, ask about save before running etags."
-  (let ((extension (file-name-extension (buffer-file-name))))
-    (condition-case err
-		ad-do-it
-      (error (and (buffer-modified-p)
-				  (not (ding))
-				  (y-or-n-p "Buffer is modified, save it? ")
-				  (save-buffer))
-			 (er-refresh-etags extension)
-			 ad-do-it))))
-
-
-(defun er-refresh-etags (&optional extension)
-  "Run etags on all peer files in current dir and reload them silently."
-  (interactive)
-  (shell-command (format "etags *.%s" (or extension "el")))
-  (let ((tags-revert-without-query t))  ; don't query, revert silently          
-    (visit-tags-table default-directory nil)))
-
-(defun parent-directory (dir)
-  (unless (equal "/" dir)
-	(file-name-directory (directory-file-name dir))))
-  
-(defun find-file-in-heirarchy (current-dir fname)
-  "Search for a file named FNAME upwards through the directory hierarchy, starting from CURRENT-DIR" 
-  (let ((file (concat current-dir fname))
-		(parent (parent-directory (expand-file-name current-dir))))
-	(if (file-exists-p file)
-		file
-	  (when parent
-		(find-file-in-heirarchy parent fname)))))
-
-(defun get-project-root () 
-  "Finds the root of the project by searching for BROWSE"
-  (directory-file-name (file-name-directory (find-file-in-heirarchy default-directory "BROWSE")))
-  )
-
-(defun load-ebrowse ()
-  (interactive)
-
-  (defvar ebrowse-tag-file (get-project-root))
-  
-  (create-tags ebrowse-tag-file)
-  (when (file-exists-p ebrowse-tag-file)
-    (find-file-noselect (format "%s/BROWSE" ebrowse-tag-file) 1)
-	)
-
-  (local-set-key "\C-c>" 'ebrowse-tags-complete-symbol)
-  (local-set-key "\C-c?" 'ebrowse-tags-find-declaration)
-  (local-set-key "\C-c." 'ebrowse-tags-find-declaration-other-window)
-
-)
-
-(add-hook 'c++-mode-common-hook 'load-ebrowse)
-(add-hook 'c-mode-common-hook 'load-ebrowse)
-
-
-(defun my-c-lineup-arglist (langelem)
-  (save-excursion
-        (goto-char (c-langelem-pos langelem))
-        (vector (+ (current-column) 4))
-        )
-  )
-
-
-
-(c-add-style "WebKit"
-              '("stroustrup"
-                (c-offsets-alist
-                 (innamespace . -)
-                 (inline-open . 0)
-                 (inher-cont . c-lineup-multi-inher)
-                 (arglist-cont-nonempty . my-c-lineup-arglist)
-                 (template-args-cont . +))))
 (defun my-c-style () 
   (interactive)
 
   (hs-minor-mode)
 
-  (define-key hs-minor-mode-map "\C-ch" 'hs-hide-block)
-  (define-key hs-minor-mode-map "\C-cs" 'hs-show-block)
+  (define-key hs-minor-mode-map (kbd "C-c h") 'hs-hide-block)
+  (define-key hs-minor-mode-map (kbd "C-c s") 'hs-show-block)
 
   (c-set-style "WebKit")
   (c-set-offset 'substatement-open '0) ; brackets should be at same indentation level as the statements they open
@@ -310,18 +211,81 @@
   (call-process-region (region-beginning) (region-end) "pbcopy")
 )
 
-(global-set-key "\M-c" 'pbcopy)
+(global-set-key (kbd "M-c") 'pbcopy)
 
-(if (> emacs-major-version 22)
+(when (> emacs-major-version 22)
 
-(require 'winring)
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/"))
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-    (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+  (require 'winring)
+  (require 'package)
+
+  (add-to-list 'package-archives
+               ;; '("melpa" . "http://melpa.org/packages/"))
+               '("melpa" . "http://melpa.milkbox.net/packages/")
+               t)
+  
+  (when (< emacs-major-version 24)
+    ;; For important compatibility libraries like cl-lib
+    (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")) t)
+
+
+  (package-initialize)
+  
+  (setq package-list '(multiple-cursors phi-search))
+  (dolist (package package-list)
+    (progn (unless (package-installed-p package)
+             (progn (unless package-archive-contents
+                      (package-refresh-contents))
+                    (package-install package)))
+           (require package)
+    ))
+
+  (global-set-key (kbd "C-s") 'phi-search)
+  (global-set-key (kbd "C-r") 'phi-search-backward)
+
+
+  (global-set-key (kbd "C-c e") 'mc/edit-lines)
+  (global-set-key (kbd "C-c b") 'mc/edit-beginnings-of-lines)
+  (global-set-key (kbd "C-c C-b") 'mc/edit-ends-of-lines)
+  (global-set-key (kbd "C-c d") 'set-rectangular-region-anchor) ;; draw
+
+  (global-set-key (kbd "C-c .") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-c ,") 'mc/mark-previous-like-this)
+
+  (global-set-key (kbd "C-c a") 'mc/mark-all-like-this)
+  (global-set-key (kbd "C-c C-a") 'mc/mark-all-words-like-this)
+  (global-set-key (kbd "C-c M-a") 'mc/mark-all-symbols-like-this)
+  (global-set-key (kbd "C-c C-s") 'mc/mark-all-in-region)
+  (global-set-key (kbd "C-c M-s") 'mc/mark-all-dwim)
+
+  (global-set-key (kbd "C-c C-u") 'mc/unmark-next-like-this)
+  (global-set-key (kbd "C-c u") 'mc/unmark-previous-like-this)
+
+  (global-set-key (kbd "C-c y") 'mc/skip-to-next-like-this)
+  (global-set-key (kbd "C-c C-y") 'mc/skip-to-previous-like-this)
+
+
+  (global-set-key (kbd "C-c i") 'mc/mark-next-like-this-symbol)
+  (global-set-key (kbd "C-c w") 'mc/mark-next-like-this-word)
+  (global-set-key (kbd "C-c C-i") 'mc/mark-next-symbol-like-this)
+  (global-set-key (kbd "C-c C-w") 'mc/mark-next-word-like-this)
+
+  (global-set-key (kbd "C-c M-i") 'mc/mark-previous-like-this-symbol)
+  (global-set-key (kbd "C-c M-w") 'mc/mark-previous-like-this-word)
+  (global-set-key (kbd "C-x M-i") 'mc/mark-previous-symbol-like-this)
+  (global-set-key (kbd "C-x M-w") 'mc/mark-previous-word-like-this)
+
+  (global-set-key (kbd "C-c l") 'mc/mark-more-like-this-extended)
+  (global-set-key (kbd "C-c p") 'mc/mark-pop)
+  (global-set-key (kbd "C-c C-r") 'mc/reverse-regions)
+
+  (global-set-key (kbd "C-c o") 'mc/sort-regions) ;; order
+
+  (global-set-key (kbd "C-c j") 'mc/insert-numbers)
+  (global-set-key (kbd "C-c C-j") 'mc/insert-letters)
+  
 )
+
+
 
 (autoload 'bash-completion-dynamic-complete
   "bash-completion"
@@ -374,4 +338,5 @@
 
 (add-hook 'latex-mode-hook 'set-latex-keys)
 (add-hook 'tex-mode-hook 'set-latex-keys)
+
 
