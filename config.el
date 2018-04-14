@@ -59,6 +59,8 @@
   (let ((shell-name (read-string "shell name: " nil)))
     (shell shell-name)))
 
+(ido-mode 1)
+
 (defun set-my-keys () 
   (interactive)
   (windmove-default-keybindings)
@@ -73,6 +75,7 @@
   (global-set-key (kbd "C-c C-k") 'global-set-key)
   (global-set-key (kbd "C-x a r") 'align-regexp)
   (global-set-key (kbd "M-R") 'replace-regexp)
+  (global-set-key (kbd "C-x C-b") 'buffer-menu)
   )
 
 (defun set-dired-keys ()
@@ -239,8 +242,8 @@
            (require package)
     ))
 
-  (global-set-key (kbd "C-s") 'phi-search)
-  (global-set-key (kbd "C-r") 'phi-search-backward)
+  (global-set-key (kbd "C-c C-n") 'phi-search)
+  (global-set-key (kbd "C-c C-p") 'phi-search-backward)
 
 
   (global-set-key (kbd "C-c e") 'mc/edit-lines)
