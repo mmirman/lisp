@@ -59,11 +59,18 @@
   (let ((shell-name (read-string "shell name: " nil)))
     (shell shell-name)))
 
-(ido-mode 1)
+(defun set-ido-keys ()
+  (interactive)
+  (global-set-key (kbd "C-x f") 'find-file)
+  (global-set-key (kbd "C-x C-f") 'find-file)
+)
+
 
 (defun set-my-keys () 
   (interactive)
   (windmove-default-keybindings)
+  (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
+
   (global-set-key (kbd "C-x \\") 'goto-line )
   (global-set-key (kbd "C-x o") 'prev-window )
   (global-set-key (kbd "C-u") 'prev-window )
@@ -76,6 +83,50 @@
   (global-set-key (kbd "C-x a r") 'align-regexp)
   (global-set-key (kbd "M-R") 'replace-regexp)
   (global-set-key (kbd "C-x C-b") 'buffer-menu)
+
+  (global-set-key (kbd "C-c C-n") 'phi-search)
+  (global-set-key (kbd "C-c C-p") 'phi-search-backward)
+  (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
+
+  (global-set-key (kbd "C-c e") 'mc/edit-lines)
+  (global-set-key (kbd "C-c b") 'mc/edit-beginnings-of-lines)
+  (global-set-key (kbd "C-c C-b") 'mc/edit-ends-of-lines)
+  (global-set-key (kbd "C-c d") 'set-rectangular-region-anchor) ;; draw
+
+  (global-set-key (kbd "C-c .") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-c ,") 'mc/mark-previous-like-this)
+
+  (global-set-key (kbd "C-c a") 'mc/mark-all-like-this)
+  (global-set-key (kbd "C-c C-a") 'mc/mark-all-words-like-this)
+  (global-set-key (kbd "C-c M-a") 'mc/mark-all-symbols-like-this)
+  (global-set-key (kbd "C-c C-s") 'mc/mark-all-in-region)
+  (global-set-key (kbd "C-c M-s") 'mc/mark-all-dwim)
+
+  (global-set-key (kbd "C-c C-u") 'mc/unmark-next-like-this)
+  (global-set-key (kbd "C-c u") 'mc/unmark-previous-like-this)
+
+  (global-set-key (kbd "C-c y") 'mc/skip-to-next-like-this)
+  (global-set-key (kbd "C-c C-y") 'mc/skip-to-previous-like-this)
+
+
+  (global-set-key (kbd "C-c i") 'mc/mark-next-like-this-symbol)
+  (global-set-key (kbd "C-c w") 'mc/mark-next-like-this-word)
+  (global-set-key (kbd "C-c C-i") 'mc/mark-next-symbol-like-this)
+  (global-set-key (kbd "C-c C-w") 'mc/mark-next-word-like-this)
+
+  (global-set-key (kbd "C-c M-i") 'mc/mark-previous-like-this-symbol)
+  (global-set-key (kbd "C-c M-w") 'mc/mark-previous-like-this-word)
+  (global-set-key (kbd "C-x M-i") 'mc/mark-previous-symbol-like-this)
+  (global-set-key (kbd "C-x M-w") 'mc/mark-previous-word-like-this)
+
+  (global-set-key (kbd "C-c l") 'mc/mark-more-like-this-extended)
+  (global-set-key (kbd "C-c p") 'mc/mark-pop)
+  (global-set-key (kbd "C-c C-r") 'mc/reverse-regions)
+
+  (global-set-key (kbd "C-c o") 'mc/sort-regions) ;; order
+
+  (global-set-key (kbd "C-c j") 'mc/insert-numbers)
+  (global-set-key (kbd "C-c C-j") 'mc/insert-letters)
   )
 
 (defun set-dired-keys ()
@@ -242,50 +293,7 @@
            (require package)
     ))
 
-  (global-set-key (kbd "C-c C-n") 'phi-search)
-  (global-set-key (kbd "C-c C-p") 'phi-search-backward)
-
-
-  (global-set-key (kbd "C-c e") 'mc/edit-lines)
-  (global-set-key (kbd "C-c b") 'mc/edit-beginnings-of-lines)
-  (global-set-key (kbd "C-c C-b") 'mc/edit-ends-of-lines)
-  (global-set-key (kbd "C-c d") 'set-rectangular-region-anchor) ;; draw
-
-  (global-set-key (kbd "C-c .") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-c ,") 'mc/mark-previous-like-this)
-
-  (global-set-key (kbd "C-c a") 'mc/mark-all-like-this)
-  (global-set-key (kbd "C-c C-a") 'mc/mark-all-words-like-this)
-  (global-set-key (kbd "C-c M-a") 'mc/mark-all-symbols-like-this)
-  (global-set-key (kbd "C-c C-s") 'mc/mark-all-in-region)
-  (global-set-key (kbd "C-c M-s") 'mc/mark-all-dwim)
-
-  (global-set-key (kbd "C-c C-u") 'mc/unmark-next-like-this)
-  (global-set-key (kbd "C-c u") 'mc/unmark-previous-like-this)
-
-  (global-set-key (kbd "C-c y") 'mc/skip-to-next-like-this)
-  (global-set-key (kbd "C-c C-y") 'mc/skip-to-previous-like-this)
-
-
-  (global-set-key (kbd "C-c i") 'mc/mark-next-like-this-symbol)
-  (global-set-key (kbd "C-c w") 'mc/mark-next-like-this-word)
-  (global-set-key (kbd "C-c C-i") 'mc/mark-next-symbol-like-this)
-  (global-set-key (kbd "C-c C-w") 'mc/mark-next-word-like-this)
-
-  (global-set-key (kbd "C-c M-i") 'mc/mark-previous-like-this-symbol)
-  (global-set-key (kbd "C-c M-w") 'mc/mark-previous-like-this-word)
-  (global-set-key (kbd "C-x M-i") 'mc/mark-previous-symbol-like-this)
-  (global-set-key (kbd "C-x M-w") 'mc/mark-previous-word-like-this)
-
-  (global-set-key (kbd "C-c l") 'mc/mark-more-like-this-extended)
-  (global-set-key (kbd "C-c p") 'mc/mark-pop)
-  (global-set-key (kbd "C-c C-r") 'mc/reverse-regions)
-
-  (global-set-key (kbd "C-c o") 'mc/sort-regions) ;; order
-
-  (global-set-key (kbd "C-c j") 'mc/insert-numbers)
-  (global-set-key (kbd "C-c C-j") 'mc/insert-letters)
-  
+ 
 )
 
 
