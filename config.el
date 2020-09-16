@@ -127,6 +127,7 @@
 
   (global-set-key (kbd "C-c j") 'mc/insert-numbers)
   (global-set-key (kbd "C-c C-j") 'mc/insert-letters)
+
   )
 
 (defun set-dired-keys ()
@@ -273,8 +274,8 @@
   (require 'package)
 
   (add-to-list 'package-archives
-               ;; '("melpa" . "http://melpa.org/packages/"))
-               '("melpa" . "http://melpa.milkbox.net/packages/")
+               '("melpa" . "http://melpa.org/packages/")
+               ;; '("melpa" . "http://melpa.milkbox.net/packages/")
                t)
   
   (when (< emacs-major-version 24)
@@ -351,3 +352,12 @@
 (add-hook 'tex-mode-hook 'set-latex-keys)
 
 
+
+(setq twelf-root "/Applications/Twelf/")
+(load (concat twelf-root "emacs/twelf-init.el"))
+(add-hook 'twelf-mode-hook 'twelf-font-fontify-buffer)
+
+
+
+(setq default-input-method "TeX")
+(global-set-key (kbd "C-\\") 'toggle-input-method)
