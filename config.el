@@ -238,7 +238,6 @@ Otherwise, one argument `-i' is passed to the shell.
 
   (global-set-key (kbd "C-c ;") 'shell)
   (global-set-key (kbd "C-c h") 'describe-symbol)
-
   )
 
 (defun set-dired-keys ()
@@ -261,6 +260,7 @@ Otherwise, one argument `-i' is passed to the shell.
 (add-hook 'shell-hook 'set-my-keys)
 (add-hook 'compilation-mode-hook 'set-my-keys)
 (add-hook 'compilation-mode-hook 'set-compilation-keys)
+
 
 
 (defun set-latex-keys ()
