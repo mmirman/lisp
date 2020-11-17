@@ -205,8 +205,8 @@ Otherwise, one argument `-i' is passed to the shell.
 
   (global-set-key (kbd "C-c C-a") 'mc/mark-all-words-like-this)
   (global-set-key (kbd "C-c M-a") 'mc/mark-all-symbols-like-this)
-  (global-set-key (kbd "C-c C-s") 'mc/mark-all-like-this)
-  (global-set-key (kbd "C-c M-s") 'mc/mark-all-in-region)
+  (global-set-key (kbd "C-c C-s") 'mc/mark-all-dwim) ;; 'mc/mark-all-like-this
+  (global-set-key (kbd "C-c M-s") 'mc/mark-all-in-region) ;; for when you want to mark all in region on one line
 
   (global-set-key (kbd "C-c C-u") 'mc/unmark-next-like-this)
   (global-set-key (kbd "C-c u") 'mc/unmark-previous-like-this)
