@@ -60,6 +60,8 @@
 # A REFERENCE ONLY, WHEN MAKING YOUR OWN CONFIGURATION..          #
 # ############################################################### #
 
+### Alt+shift - f/b: useful in emacs apparently.  Never used before.  Highlights by jumping words
+
 # open terminal, blazingly fast compared to iTerm/Hyper
 ctrl + alt - return : open -a /Applications/iTerm.app
 
@@ -72,19 +74,18 @@ ctrl + shift - b : yabai -m window --focus west
 ctrl + shift - p : yabai -m window --focus north
 ctrl + shift - n : yabai -m window --focus south
 
-# swaps
-cmd + shift - f : yabai -m window --swap east
-cmd + shift - b : yabai -m window --swap west
-cmd + shift - p : yabai -m window --swap north
-cmd + shift - n : yabai -m window --swap south
-
 
 # warps - moves the window to the bsp node in that direction
-alt + shift - f : yabai -m window --warp east    # useful in emacs apparently.  Never used before.  Highlights by jumping words
-alt + shift - b : yabai -m window --warp west    # useful in emacs apparently.  Never used before.  Highlights by jumping words
-alt + shift - p : yabai -m window --warp north
-alt + shift - n : yabai -m window --warp south
+ctrl + cmd - f : yabai -m window --warp east    
+ctrl + cmd - b : yabai -m window --warp west    
+ctrl + cmd - p : yabai -m window --warp north
+ctrl + cmd - n : yabai -m window --warp south
 
+# swaps
+ctrl + cmd + shift - f : yabai -m window --swap east
+ctrl + cmd + shift - b : yabai -m window --swap west
+ctrl + cmd + shift - p : yabai -m window --swap north
+ctrl + cmd + shift - n : yabai -m window --swap south
 
 
 # swap managed window
