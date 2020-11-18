@@ -35,6 +35,7 @@ alias emacs="emacs -nw"
 #alias emacsStop="emacsclient -nw -t -e '(kill-emacs)'"
 
 ssh-add ~/.ssh/*.pem 2> /dev/null
+ssh-add ~/.ssh/id_rsa 2> /dev/null
 
 function bk {
     alias $1="cd $(PWD)"
@@ -65,14 +66,25 @@ export EC2_HOME=/usr/local/ec2/ec2-api-tools-1.7.5.0
 export PATH=$PATH:$EC2_HOME/bin/
 
 function start_wm {
-    brew services start khd
+    ln -f ~/.emacs.d/lisp/.skhdrc_chunkwm ~/.skhdrc
+    brew services start skhd
     brew services start chunkwm
 }
 
 function stop_wm {
     brew services stop chunkwm
-    brew services stop khd
+    brew services stop skhd
 }
 
 
 
+function start_yabai {
+    ln -f ~/.emacs.d/lisp/.skhdrc_yabai ~/.skhdrc
+    brew services start skhd
+    brew services start koekeishiya/formulae/yabai
+}
+
+function stop_yabai {
+    brew services stop koekeishiya/formulae/yabai
+    brew services stop skhd
+}
