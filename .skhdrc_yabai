@@ -61,21 +61,37 @@
 # ############################################################### #
 
 # open terminal, blazingly fast compared to iTerm/Hyper
-shift + cmd - return : open -a /Applications/iTerm.app
+ctrl + alt - return : open -a /Applications/iTerm.app
 
 # focuses 
 lcmd - o : yabai -m window --focus next
 shift + lcmd - o : yabai -m window --focus prev
 
+ctrl + shift - f : yabai -m window --focus east
+ctrl + shift - b : yabai -m window --focus west
+ctrl + shift - p : yabai -m window --focus north
+ctrl + shift - n : yabai -m window --focus south
 
-# focus window
-# cmd + alt - h : yabai -m window --focus west
+# swaps
+cmd + shift - f : yabai -m window --swap east
+cmd + shift - b : yabai -m window --swap west
+cmd + shift - p : yabai -m window --swap north
+cmd + shift - n : yabai -m window --swap south
+
+
+# warps - moves the window to the bsp node in that direction
+alt + shift - f : yabai -m window --warp east    # useful in emacs apparently.  Never used before.  Highlights by jumping words
+alt + shift - b : yabai -m window --warp west    # useful in emacs apparently.  Never used before.  Highlights by jumping words
+alt + shift - p : yabai -m window --warp north
+alt + shift - n : yabai -m window --warp south
+
+
 
 # swap managed window
 # shift + alt - h : yabai -m window --swap north
 
 # move managed window
-# shift + cmd - h : yabai -m window --warp east
+# cmd + shift - h : yabai -m window --warp east
 
 # balance size of windows
 # shift + alt - 0 : yabai -m space --balance
