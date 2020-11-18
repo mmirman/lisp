@@ -60,10 +60,16 @@
 # A REFERENCE ONLY, WHEN MAKING YOUR OWN CONFIGURATION..          #
 # ############################################################### #
 
+# numerical keybindings:  https://stackoverflow.com/questions/3202629/where-can-i-find-a-list-of-mac-virtual-key-codes/16125341
+
 ### Alt+shift - f/b: useful in emacs apparently.  Never used before.  Highlights by jumping words
+
+# toggle window split type  0x31 = space
+ctrl + shift - 0x31 : yabai -m window --toggle split
 
 # open terminal, blazingly fast compared to iTerm/Hyper
 ctrl + alt - return : open -a /Applications/iTerm.app
+ctrl + alt - 0x31   : open -a /Applications/iTerm.app
 
 # focuses 
 lcmd - o : yabai -m window --focus next
@@ -86,6 +92,12 @@ ctrl + cmd + shift - f : yabai -m window --swap east
 ctrl + cmd + shift - b : yabai -m window --swap west
 ctrl + cmd + shift - p : yabai -m window --swap north
 ctrl + cmd + shift - n : yabai -m window --swap south
+
+# modify window size
+ctrl + shift - 0x1E : yabai -m window --resize left:-20:0; yabai -m window --resize right:20:0  # 0x1E = ]
+ctrl + shift - 0x21 : yabai -m window --resize left:20:0; yabai -m window --resize right:-20:0  # 0x21 = [
+ctrl + shift - 5 : yabai -m window --resize bottom:0:-20; yabai -m window --resize top:0:20
+ctrl + shift - 6 : yabai -m window --resize bottom:0:20; yabai -m window --resize top:0:-20
 
 
 # swap managed window
@@ -129,18 +141,6 @@ ctrl + cmd + shift - n : yabai -m window --swap south
 # shift + ctrl - a : yabai -m window --move rel:-20:0
 # shift + ctrl - s : yabai -m window --move rel:0:20
 
-# increase window size
-# 0x1E = ]
-# 0x21 = [   - https://stackoverflow.com/questions/3202629/where-can-i-find-a-list-of-mac-virtual-key-codes/16125341
-ctrl + shift - 0x1E : yabai -m window --resize left:-20:0; yabai -m window --resize right:20:0
-ctrl + shift - 0x21 : yabai -m window --resize left:20:0; yabai -m window --resize right:-20:0
-ctrl + shift - 5 : yabai -m window --resize bottom:0:-20; yabai -m window --resize top:0:20
-ctrl + shift - 6 : yabai -m window --resize bottom:0:20; yabai -m window --resize top:0:-20
-
-
-# decrease window size
-# shift + cmd - s : yabai -m window --resize bottom:0:-20
-# shift + cmd - w : yabai -m window --resize top:0:20
 
 # set insertion point in focused container
 # ctrl + alt - h : yabai -m window --insert west
@@ -149,8 +149,6 @@ ctrl + shift - 6 : yabai -m window --resize bottom:0:20; yabai -m window --resiz
 # alt - d : yabai -m window --toggle zoom-parent
 # alt - f : yabai -m window --toggle zoom-fullscreen
 
-# toggle window split type
-ctrl + shift - 0x31 : yabai -m window --toggle split
 
 # float / unfloat window and center on screen
 # alt - t : yabai -m window --toggle float;\
