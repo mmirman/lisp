@@ -115,10 +115,10 @@ shift + lcmd - o : yabai -m window --focus prev
 # increase window size
 # 0x1E = ]
 # 0x21 = [   - https://stackoverflow.com/questions/3202629/where-can-i-find-a-list-of-mac-virtual-key-codes/16125341
-rshift + lcmd - 0x1E : yabai -m window --resize left:-20:0; yabai -m window --resize right:20:0
-rshift + lcmd - 0x21 : yabai -m window --resize left:20:0; yabai -m window --resize right:-20:0
-rshift + lcmd - 5 : yabai -m window --resize bottom:0:-20; yabai -m window --resize top:0:20
-rshift + lcmd - 6 : yabai -m window --resize bottom:0:20; yabai -m window --resize top:0:-20
+ctrl + shift - 0x1E : yabai -m window --resize left:-20:0; yabai -m window --resize right:20:0
+ctrl + shift - 0x21 : yabai -m window --resize left:20:0; yabai -m window --resize right:-20:0
+ctrl + shift - 5 : yabai -m window --resize bottom:0:-20; yabai -m window --resize top:0:20
+ctrl + shift - 6 : yabai -m window --resize bottom:0:20; yabai -m window --resize top:0:-20
 
 
 # decrease window size
@@ -133,7 +133,7 @@ rshift + lcmd - 6 : yabai -m window --resize bottom:0:20; yabai -m window --resi
 # alt - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window split type
-rshift + lcmd - 0x31 : yabai -m window --toggle split
+ctrl + shift - 0x31 : yabai -m window --toggle split
 
 # float / unfloat window and center on screen
 # alt - t : yabai -m window --toggle float;\
