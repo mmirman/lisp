@@ -133,7 +133,7 @@ rshift + lcmd - 6 : yabai -m window --resize bottom:0:20; yabai -m window --resi
 # alt - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window split type
-# alt - e : yabai -m window --toggle split
+rshift + lcmd - 0x31 : yabai -m window --toggle split
 
 # float / unfloat window and center on screen
 # alt - t : yabai -m window --toggle float;\
