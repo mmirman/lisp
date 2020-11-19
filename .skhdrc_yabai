@@ -89,8 +89,22 @@ shift + lcmd - o : yabai -m window --focus prev \
                    ; yabai -m space --focus last \
                    ; yabai -m window --focus last )
 
-ctrl + shift - f : yabai -m window --focus east
-ctrl + shift - b : yabai -m window --focus west
+# yabai -m window --focus east
+ctrl + shift - f : yabai -m window --focus east \
+                || ( ( yabai -m display --focus east \
+                    || yabai -m space --focus next ) \
+                   && yabai -m window --focus first ) \
+                || ( yabai -m display --focus first \
+                   ; yabai -m space --focus first \
+                   ; yabai -m window --focus first )  
+
+ctrl + shift - b : yabai -m window --focus west \
+                || ( ( yabai -m display --focus west \
+                    || yabai -m space --focus prev ) \
+                   && yabai -m window --focus last ) \
+                || ( yabai -m display --focus last \
+                   ; yabai -m space --focus last \
+                   ; yabai -m window --focus last )
 ctrl + shift - p : yabai -m window --focus north
 ctrl + shift - n : yabai -m window --focus south
 
