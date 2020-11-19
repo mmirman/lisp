@@ -72,18 +72,18 @@ ctrl + alt - return : open -a /Applications/iTerm.app
 ctrl + alt - 0x31   : open -a /Applications/iTerm.app
 
 # focuses 
-# TODO: make focus go to next screen if failure!
+# CMD-o  is within display if possible.   CTRL-shft-fb is spatial (between displays)
 lcmd - o : yabai -m window --focus next \
-        || ( (  yabai -m display --focus next \
-             || yabai -m space --focus next ) \
+        || ( (  yabai -m space --focus next \
+             || yabai -m display --focus next ) \
            && yabai -m window --focus first ) \
         || ( yabai -m display --focus first \
            ; yabai -m space --focus first \
            ; yabai -m window --focus first )
 
 shift + lcmd - o : yabai -m window --focus prev \
-                || ( ( yabai -m display --focus prev \
-                    || yabai -m space --focus prev ) \
+                || ( ( yabai -m space --focus prev \
+                    || yabai -m display --focus prev ) \
                    && yabai -m window --focus last ) \
                 || ( yabai -m display --focus last \
                    ; yabai -m space --focus last \
@@ -91,7 +91,7 @@ shift + lcmd - o : yabai -m window --focus prev \
 
 # yabai -m window --focus east
 ctrl + shift - f : yabai -m window --focus east \
-                || ( ( yabai -m display --focus east \
+                || ( ( yabai -m display --focus next \
                     || yabai -m space --focus next ) \
                    && yabai -m window --focus first ) \
                 || ( yabai -m display --focus first \
@@ -99,7 +99,7 @@ ctrl + shift - f : yabai -m window --focus east \
                    ; yabai -m window --focus first )  
 
 ctrl + shift - b : yabai -m window --focus west \
-                || ( ( yabai -m display --focus west \
+                || ( ( yabai -m display --focus prev \
                     || yabai -m space --focus prev ) \
                    && yabai -m window --focus last ) \
                 || ( yabai -m display --focus last \
