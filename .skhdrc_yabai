@@ -111,16 +111,17 @@ ctrl + shift - n : yabai -m window --focus south
 
 # warps - moves the window to the bsp node in that direction
 ctrl + cmd - f : yabai -m window --warp east \
-              || yabai -m window --display next \
-              || yabai -m window --space next \
-              || yabai -m window --display first \
-              || yabai -m window --space first
-
+              || (yabai -m window --display next  && yabai -m display --focus next  && yabai -m window --focus recent ) \
+              || (yabai -m window --space next    && yabai -m space --focus next    && yabai -m window --focus recent ) \
+              || (yabai -m window --display first && yabai -m display --focus first && yabai -m window --focus recent ) \
+              || (yabai -m window --space first   && yabai -m space --focus first   && yabai -m window --focus recent )
+                 
 ctrl + cmd - b : yabai -m window --warp west \
-              || yabai -m window --display prev \
-              || yabai -m window --space prev \
-              || yabai -m window --display last \
-              || yabai -m window --space last
+              || (yabai -m window --display prev && yabai -m display --focus prev && yabai -m window --focus recent ) \
+              || (yabai -m window --space prev   && yabai -m space --focus prev   && yabai -m window --focus recent ) \
+              || (yabai -m window --display last && yabai -m display --focus last && yabai -m window --focus recent ) \
+              || (yabai -m window --space last   && yabai -m space --focus last   && yabai -m window --focus recent )
+                 
 
 ctrl + cmd - p : yabai -m window --warp north
 ctrl + cmd - n : yabai -m window --warp south
