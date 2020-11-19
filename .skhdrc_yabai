@@ -74,17 +74,20 @@ ctrl + alt - 0x31   : open -a /Applications/iTerm.app
 # focuses 
 # TODO: make focus go to next screen if failure!
 lcmd - o : yabai -m window --focus next \
-        || yabai -m display --focus next \
-        || (  yabai -m space --focus next \
-           && index="$(yabai -m query --spaces --window | jq '.[-1]."first-window"')" \
-           && yabai -m window --focus "${index}" \
-           ) 
+        || ( (  yabai -m display --focus next \
+             || yabai -m space --focus next ) \
+           && yabai -m window --focus first ) \
+        || ( yabai -m display --focus first \
+           ; yabai -m space --focus first \
+           ; yabai -m window --focus first )
+
 shift + lcmd - o : yabai -m window --focus prev \
-                || yabai -m display --focus prev \
-                || (  yabai -m space --focus prev \
-                   && index="$(yabai -m query --spaces --window | jq '.[-1]."last-window"')" \
-                   && yabai -m window --focus "${index}" \
-                   ) 
+                || ( ( yabai -m display --focus prev \
+                    || yabai -m space --focus prev ) \
+                   && yabai -m window --focus last ) \
+                || ( yabai -m display --focus last \
+                   ; yabai -m space --focus last \
+                   ; yabai -m window --focus last )
 
 ctrl + shift - f : yabai -m window --focus east
 ctrl + shift - b : yabai -m window --focus west
